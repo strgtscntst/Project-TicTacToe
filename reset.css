@@ -1,0 +1,26 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+body{
+    line-height: calc(1em+0.5em);
+    -webkit-font-smoothing: antialiased; /*readability with MacOS*/
+}
+
+img, picture, video, canvas, svg{
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select{
+    font: inherit;  /* avoids autozoom on mobile */
+}
+
+p, h1, h2, h3, h4, h5, h6{  /* avoids text overflow */
+    overflow-wrap: break-word;  
+    hyphens: auto;
+}
+
+#root, #__next{
+    isolation: isolate; /* helps with stacking context bugs */
+}
