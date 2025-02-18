@@ -1,0 +1,21 @@
+Goals: 
+    * Build a Tic-Tac-Toe Board.
+        - Two players
+            - from playerFactory
+        - Alternating turns
+        - Game Board
+            - Player Interactivity
+    * Meta UI
+        - playerName inputs
+        - start/restart button
+        - "win" screen (modal?)
+    * Have as little global code as possible.
+    * Place functionality in the objects that make sense.
+
+
+Objects:
+    * GameBoard
+    * Player1
+    * Player2
+    * TurnKeeper (Manages the flow of the game)
+    * GameDisplay
