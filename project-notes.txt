@@ -5,7 +5,8 @@ Goals:
         - Alternating turns
         - Game Board
             - Player Interactivity
-    * Meta UI
+        - Win-check
+    * UI
         - playerName inputs
         - start/restart button
         - "win" screen (modal?)
@@ -14,8 +15,8 @@ Goals:
 
 
 Objects:
-    * GameBoard
-    * Player1
-    * Player2
-    * TurnKeeper (Manages the flow of the game)
-    * GameDisplay
+    * gameBoard
+    * playerSet
+        - Player1
+        - Player2
+
