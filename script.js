@@ -3,7 +3,6 @@
 let ticTacToe = (function(){
     let whoseTurn = "X"
     let gameBoard 
-
     // Cache Dom
     const el = document;
 
@@ -12,12 +11,8 @@ let ticTacToe = (function(){
     
     // Run the game
     const playerSet = createPlayers()
-    freshBoard = [
-        ["","",""],
-        ["","",""],
-        ["","",""]
-    ]
-    gameBoard = freshBoard
+
+    _setGameBoard()
     _render()
 
 
@@ -46,6 +41,14 @@ let ticTacToe = (function(){
         // return an object containing two "player" objects
     }
 
+    function _setGameBoard(){
+        return gameBoard = [
+            ["","",""],
+            ["","",""],
+            ["","",""]
+        ]
+    }
+
     function _swapTurn(){
         
         whoseTurn = whoseTurn==="X" ? "O" : "X"
@@ -54,20 +57,75 @@ let ticTacToe = (function(){
     }
 
     function _checkForWin(){
+        let arrsToCheck = [
+            [gameBoard[0][0], gameBoard[0][1], gameBoard[0][2]],
+            [gameBoard[1][0], gameBoard[1][1], gameBoard[1][2]],
+            [gameBoard[2][0], gameBoard[2][1], gameBoard[2][2]],
+            [gameBoard[0][0], gameBoard[1][0], gameBoard[2][0]],
+            [gameBoard[0][1], gameBoard[1][1], gameBoard[2][1]],
+            [gameBoard[0][2], gameBoard[1][2], gameBoard[2][2]],
+            [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]],
+            [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]]
+        ]
+
         // check for win or tie
-        if(false
 
-        ){
-        alert(`${whoseTurn} wins!`)
-        gameBoard = freshBoard
+
+        if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){      // CHECK THIS NEXT
+
+            // Notify the players
+            alert(`${whoseTurn} wins!`)
+
+            // Wipe the gameBoard
+            _setGameBoard()
+            return true
+        } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
+            alert ("Tie game")
+            _setGameBoard()  
+            return true        
+        } else {
+            return false
         }
-
     }
 
 
 
+
+    //Debugging functions
+    function checkBoard(){
+        console.table(gameBoard)
+    }
+    function checkTieGame(){
+        gameBoard = [
+            ["X","O","X"],
+            ["X","O","X"],
+            ["O","X","O"],
+        ]
+        _render()
+        _checkForWin()
+        _swapTurn()
+    }
+    function checkWinGame(){
+        gameBoard = [
+            ["X","O","X"],
+            ["X","O","X"],
+            ["X","",""],
+        ]
+        _render()
+
+        _checkForWin()
+        _swapTurn()
+
+    }
+    // end debugging
+
+
+
     return {
-        gameBoard,
-        _runTurn
+        checkBoard,
+        _runTurn,
+        checkWinGame,
+        checkTieGame,
+        _checkForWin
     }
 })()

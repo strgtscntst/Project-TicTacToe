@@ -20,3 +20,6 @@ Objects:
         - Player1
         - Player2
 
+Things I forgot and re-learned while coding this:
+
+    - curly-braces {} within a callback function require an explicit return statement
