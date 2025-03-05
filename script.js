@@ -3,11 +3,19 @@
 let ticTacToe = (function(){
     let whoseTurn = "X"
     let gameBoard 
+
     // Cache Dom
-    const el = document;
+    const DOC = document;
+    const cellList = Array.from(DOC.querySelectorAll('.cell'))
 
     // Bind Events
-
+    cellList.map(node => {
+        node.addEventListener("click", () => {
+            const x = node.getAttribute("data-x");
+            const y = node.getAttribute("data-y");
+            _runTurn(x, y);
+        })
+    })
     
     // Run the game
     const playerSet = createPlayers()
@@ -19,20 +27,22 @@ let ticTacToe = (function(){
 
     // _runTurn() should be the callback for eventListeners placing marks
     function _runTurn(x, y){
-        if (gameBoard[x][y] !== ""){
+        if (gameBoard[y][x] !== ""){
             console.log("Position occupied")
             return
         } else {
-            gameBoard[x][y] = whoseTurn
+            gameBoard[y][x] = whoseTurn
         }
-        _checkForWin()
+        if (_checkForWin()){
+            // avoid immediately swapping to "O"'s turn
+            _render()
+            return
+        }
         _swapTurn()
     }
 
     function _render(){
         console.table(gameBoard)
-
-
     }
 
     function createPlayers(){
@@ -42,6 +52,7 @@ let ticTacToe = (function(){
     }
 
     function _setGameBoard(){
+        whoseTurn = "X";
         return gameBoard = [
             ["","",""],
             ["","",""],
@@ -70,17 +81,18 @@ let ticTacToe = (function(){
 
         // check for win or tie
 
-
-        if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){      // CHECK THIS NEXT
+        if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
+            _render()
 
             // Notify the players
-            alert(`${whoseTurn} wins!`)
+            console.log(`${whoseTurn} wins!`)
 
             // Wipe the gameBoard
             _setGameBoard()
             return true
         } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
-            alert ("Tie game")
+            _render()
+            console.log("Tie game")
             _setGameBoard()  
             return true        
         } else {
