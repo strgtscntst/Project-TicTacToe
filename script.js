@@ -24,12 +24,20 @@ let ticTacToe = (function(){
             return
         } else {
             gameBoard[y][x] = whoseTurn
+
         }
         _checkForWin()
         _render()
     }
     
     function _render(){
+        // populate table
+        cellList.map(cell => {
+            const x = Number(cell.getAttribute("data-x"))
+            const y = Number(cell.getAttribute("data-y"))
+            cell.textContent = gameBoard[y][x];
+        })
+
         console.table(gameBoard)
     }
     
