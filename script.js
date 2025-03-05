@@ -7,6 +7,7 @@ let ticTacToe = (function(){
     // Cache Dom
     const DOC = document;
     const cellList = Array.from(DOC.querySelectorAll('.cell'))
+    const resetButton = DOC.getElementById("reset")
 
     // Bind Events
     cellList.map(node => {
@@ -16,12 +17,17 @@ let ticTacToe = (function(){
             _runTurn(node, x, y);
         })
     })
-    
+    resetButton.addEventListener("click", () => {
+        _setGameBoard();
+        _render();
+    })
     
     function _runTurn(node, x, y){
         if (gameBoard[y][x] !== ""){
             console.log("Position occupied")
             return
+        } else if(whoseTurn == "gameWon"){
+            return  // prevents board placement & modification of winner
         } else {
             gameBoard[y][x] = whoseTurn
 
@@ -59,7 +65,7 @@ let ticTacToe = (function(){
     
     function _swapTurn(){
         
-        whoseTurn = whoseTurn==="X" ? "O" : "X"
+        whoseTurn = whoseTurn==="O" ? "X" : "O"
         console.log("whoseTurn = " + whoseTurn)
         // _render()
     }
@@ -76,22 +82,28 @@ let ticTacToe = (function(){
             [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]]
         ]
         
-        // check for win or tie
+        // prevent modification of whoseTurn if game has been won.
+        if(whoseTurn != "gameWon"){
         
-        if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
-            _render()
+            // check for win or tie
             
-            // Notify the players
-            console.log(`${whoseTurn} wins!`)
-            
-            // Wipe the gameBoard
-            _setGameBoard()
-        } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
-            _render()
-            console.log("Tie game")
-            _setGameBoard()  
-        } else {
-            _swapTurn()
+            if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
+                _render()
+                
+                // Notify the players
+                console.log(`${whoseTurn} wins!`)
+                whoseTurn = "gameWon"
+
+                // Wipe the gameBoard
+                // _setGameBoard()
+            } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
+                _render()
+                console.log("Tie game")
+                whoseTurn = "gameWon"
+                // _setGameBoard()  
+            } else {
+                _swapTurn()
+            }
         }
     }
     

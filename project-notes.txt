@@ -13,6 +13,16 @@ Goals:
     * Have as little global code as possible.
     * Place functionality in the objects that make sense.
 
+To Do:
+    * Make invalid moves flash the clicked cell red.
+    * Impliment victory/tie notification.
+    * Change playerNames to input boxes
+        - disguised, only modifiable when selected.
+    
+Look Into:
+    * Board-wipe animation
+    * Victory animation
+
 
 Objects:
     * gameBoard
@@ -23,3 +33,5 @@ Objects:
 Things I forgot and re-learned while coding this:
 
     - curly-braces {} within a callback function require an explicit return statement
+    - converting a nodeList to an array does not annul its ability to modify the DOM
+    - I don't need to name an existing function as a callback. If I need to pass arguments, I can run the named function with its parentheses and arguments within an anonymous function as the callback.
