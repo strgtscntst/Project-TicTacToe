@@ -8,7 +8,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>test script</h1>
+    <div class="panel player1">
+        <h2 id="player1Name">player1Name</h2>
+        <div class = "contentDivider"></div>
+        <div class = "icon">X</div>
+    </div>
+    <div class="centerPanel panel">
+        <h1 class="header">TicTacToe</h1>
+        <div class = "contentDivider"></div>
+        <div id="gameBoard">
+            <div class="cell" data-x="0" data-y="0"></div>
+            <div class="cell" data-x="1" data-y="0"></div>
+            <div class="cell" data-x="2" data-y="0"></div>
+            <div class="cell" data-x="0" data-y="1"></div>
+            <div class="cell" data-x="1" data-y="1"></div>
+            <div class="cell" data-x="2" data-y="1"></div>
+            <div class="cell" data-x="0" data-y="2"></div>
+            <div class="cell" data-x="1" data-y="2"></div>
+            <div class="cell" data-x="2" data-y="2"></div>
+        </div>
+    </div>
+    <div class="panel player2">
+        <h2 id="player2Name">player2Name</h2>
+        <div class = "contentDivider"></div>
+        <div class = "icon">O</div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
