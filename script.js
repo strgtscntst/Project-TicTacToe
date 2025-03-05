@@ -13,60 +13,49 @@ let ticTacToe = (function(){
         node.addEventListener("click", () => {
             const x = node.getAttribute("data-x");
             const y = node.getAttribute("data-y");
-            _runTurn(x, y);
+            _runTurn(node, x, y);
         })
     })
     
-    // Run the game
-    const playerSet = createPlayers()
-
-    _setGameBoard()
-    _render()
-
-
-
-    // _runTurn() should be the callback for eventListeners placing marks
-    function _runTurn(x, y){
+    
+    function _runTurn(node, x, y){
         if (gameBoard[y][x] !== ""){
             console.log("Position occupied")
             return
         } else {
             gameBoard[y][x] = whoseTurn
         }
-        if (_checkForWin()){
-            // avoid immediately swapping to "O"'s turn
-            _render()
-            return
-        }
-        _swapTurn()
+        _checkForWin()
+        _render()
     }
-
+    
     function _render(){
         console.table(gameBoard)
     }
-
+    
     function createPlayers(){
         // try deconstructing a nodelist of all inputs for assignment?
-
+        
         // return an object containing two "player" objects
     }
-
+    
     function _setGameBoard(){
         whoseTurn = "X";
-        return gameBoard = [
+        gameBoard = [
             ["","",""],
             ["","",""],
             ["","",""]
         ]
+        // _render()
     }
-
+    
     function _swapTurn(){
         
         whoseTurn = whoseTurn==="X" ? "O" : "X"
         console.log("whoseTurn = " + whoseTurn)
-        _render()
+        // _render()
     }
-
+    
     function _checkForWin(){
         let arrsToCheck = [
             [gameBoard[0][0], gameBoard[0][1], gameBoard[0][2]],
@@ -78,31 +67,33 @@ let ticTacToe = (function(){
             [gameBoard[0][0], gameBoard[1][1], gameBoard[2][2]],
             [gameBoard[0][2], gameBoard[1][1], gameBoard[2][0]]
         ]
-
+        
         // check for win or tie
-
+        
         if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
             _render()
-
+            
             // Notify the players
             console.log(`${whoseTurn} wins!`)
-
+            
             // Wipe the gameBoard
             _setGameBoard()
-            return true
         } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
             _render()
             console.log("Tie game")
             _setGameBoard()  
-            return true        
         } else {
-            return false
+            _swapTurn()
         }
     }
-
-
-
-
+    
+    
+    // Run the game
+    const playerSet = createPlayers()
+    _setGameBoard()
+    _render()
+    
+    
     //Debugging functions
     function checkBoard(){
         console.table(gameBoard)
