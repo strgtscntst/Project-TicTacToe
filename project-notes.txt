@@ -35,3 +35,4 @@ Things I forgot and re-learned while coding this:
     - curly-braces {} within a callback function require an explicit return statement
     - converting a nodeList to an array does not annul its ability to modify the DOM
     - I don't need to name an existing function as a callback. If I need to pass arguments, I can run the named function with its parentheses and arguments within an anonymous function as the callback.
+    - fnName.bind(thisArg, arg1, arg2...) returns a function with specified "this" value, along with the following arguments prepended to future calls.

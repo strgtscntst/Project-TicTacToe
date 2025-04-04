@@ -26,7 +26,7 @@ body{
 div.centerPanel{
     flex-grow: 2;    
 }
-.player1, .player2{
+.playerPanel{
     flex-grow: 1;
     max-width: 300px;
 }
@@ -77,4 +77,17 @@ div.contentDivider{
 }
 #reset:active{
     box-shadow: inset 10px 10px 6px rgba(0, 0, 0, 0.3);
+}
+
+.icon{
+    font-size: 96px;
+    font-weight: bold;
+    margin-top: 80px;
+}
+
+#playerXNameInput,
+#playerONameInput{
+    /* display: none; */
+    text-align: center;
+    width: auto;
 }

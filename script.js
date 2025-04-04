@@ -3,30 +3,52 @@
 let ticTacToe = (function(){
     let whoseTurn = "X"
     let gameBoard 
+    let isGameRunning 
 
     // Cache Dom
     const DOC = document;
     const cellList = Array.from(DOC.querySelectorAll('.cell'))
     const resetButton = DOC.getElementById("reset")
+    const playerPanels = Array.from(DOC.querySelectorAll(".playerPanel"))
 
     // Bind Events
     cellList.map(node => {
         node.addEventListener("click", () => {
             const x = node.getAttribute("data-x");
             const y = node.getAttribute("data-y");
-            _runTurn(node, x, y);
+            _runTurn(x, y);
         })
     })
     resetButton.addEventListener("click", () => {
         _setGameBoard();
         _render();
     })
-    
-    function _runTurn(node, x, y){
+    playerPanels.map((panel)=> {
+        // TODO apply click listener to h2 & submit button that calls a function to swap display:none between the h2 and the playerNameInput(and submit button)
+
+        
+        let playerIcon = panel.getAttribute("data-player"); // assume that is pulled from panel data-player
+
+        this.querySelector("h2").addEventListener("click", _nameDisplaySwap.bind(panel, playerIcon))
+        
+        this.querySelector("button").addEventListener("click", _nameDisplaySwap.bind(panel, playerIcon))
+        
+        // TODO within the callback, return the name value for use in createPlayers()
+        // look into Event.target?
+    })
+
+    function _nameDisplaySwap(playerIcon){
+        // this === panel
+        // h2 -> display = display == block ? none : block
+        // nameInput -> display = display == block ? none : block;
+        // h2.textContent = input.textContent
+    }
+
+    function _runTurn(x, y){
         if (gameBoard[y][x] !== ""){
             console.log("Position occupied")
             return
-        } else if(whoseTurn == "gameWon"){
+        } else if(!isGameRunning){
             return  // prevents board placement & modification of winner
         } else {
             gameBoard[y][x] = whoseTurn
@@ -45,33 +67,45 @@ let ticTacToe = (function(){
         })
 
         console.table(gameBoard)
+        // TODO display victory message
+        if(!isGameRunning){
+            // display victory modal
+        }
     }
     
     function createPlayers(){
         // try deconstructing a nodelist of all inputs for assignment?
+        // TODO obtain playerNames from their respective h2 elements
+        let player1Name = ""
+        let player2Name = ""
+
         
         // return an object containing two "player" objects
+
+        return {
+            X: player1Name,
+            O: player2Name
+        }
     }
     
     function _setGameBoard(){
         whoseTurn = "X";
+        isGameRunning = true
         gameBoard = [
             ["","",""],
             ["","",""],
             ["","",""]
         ]
-        // _render()
     }
     
     function _swapTurn(){
         
         whoseTurn = whoseTurn==="O" ? "X" : "O"
         console.log("whoseTurn = " + whoseTurn)
-        // _render()
     }
     
     function _checkForWin(){
-        let arrsToCheck = [
+        let winArrays = [
             [gameBoard[0][0], gameBoard[0][1], gameBoard[0][2]],
             [gameBoard[1][0], gameBoard[1][1], gameBoard[1][2]],
             [gameBoard[2][0], gameBoard[2][1], gameBoard[2][2]],
@@ -83,24 +117,20 @@ let ticTacToe = (function(){
         ]
         
         // prevent modification of whoseTurn if game has been won.
-        if(whoseTurn != "gameWon"){
+        if(isGameRunning){
         
             // check for win or tie
-            
-            if(arrsToCheck.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
-                _render()
+            if(winArrays.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
+                // _render()
                 
-                // Notify the players
+                // TODO Notify the players of winstate
                 console.log(`${whoseTurn} wins!`)
-                whoseTurn = "gameWon"
-
-                // Wipe the gameBoard
-                // _setGameBoard()
+                isGameRunning = false
             } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
-                _render()
+                // _render()
                 console.log("Tie game")
-                whoseTurn = "gameWon"
-                // _setGameBoard()  
+                isGameRunning = false
+
             } else {
                 _swapTurn()
             }
@@ -145,10 +175,14 @@ let ticTacToe = (function(){
 
 
     return {
+        whoseTurn,
         checkBoard,
         _runTurn,
         checkWinGame,
         checkTieGame,
-        _checkForWin
+        _checkForWin,
+        // playerSet,
+        playerPanels,
+        isGameRunning
     }
 })()
