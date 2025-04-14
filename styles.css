@@ -85,9 +85,8 @@ div.contentDivider{
     margin-top: 80px;
 }
 
-#playerXNameInput,
-#playerONameInput{
-    /* display: none; */
+.editArea{
+    display: none;
     text-align: center;
     width: auto;
 }

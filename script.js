@@ -1,9 +1,10 @@
 // Gameboard
 
-let ticTacToe = (function(){
+const ticTacToe = (function(){
     let whoseTurn = "X"
     let gameBoard 
     let isGameRunning 
+    let playerSet
 
     // Cache Dom
     const DOC = document;
@@ -24,24 +25,44 @@ let ticTacToe = (function(){
         _render();
     })
     playerPanels.map((panel)=> {
-        // TODO apply click listener to h2 & submit button that calls a function to swap display:none between the h2 and the playerNameInput(and submit button)
+        // apply click listener to h2 & submit button that calls a function to swap display:none between the h2 and the editArea div
 
+        panel.querySelector("h2").addEventListener("click", function(e){
+            _nameDisplaySwap.bind(panel, e)()
+        })
         
-        let playerIcon = panel.getAttribute("data-player"); // assume that is pulled from panel data-player
+        panel.querySelector("button").addEventListener("click", function(e){
+            _nameDisplaySwap.bind(panel, e)()
+        })
 
-        this.querySelector("h2").addEventListener("click", _nameDisplaySwap.bind(panel, playerIcon))
-        
-        this.querySelector("button").addEventListener("click", _nameDisplaySwap.bind(panel, playerIcon))
-        
+        panel.querySelector(".editArea input").addEventListener("keydown", function(e){
+            if (e.key === "Enter"){
+                _nameDisplaySwap.bind(panel, e)()
+            }
+        })
         // TODO within the callback, return the name value for use in createPlayers()
         // look into Event.target?
     })
 
-    function _nameDisplaySwap(playerIcon){
+    function _nameDisplaySwap(e){
         // this === panel
+        const h2 = this.querySelector("h2")
+        const editArea = this.querySelector(".editArea")
+        const input = this.querySelector("input")
+
+        const isEditing = h2.style.display === "none"
+
         // h2 -> display = display == block ? none : block
+        h2.style.display = isEditing ? "block" : "none"
+
         // nameInput -> display = display == block ? none : block;
+        editArea.style.display = isEditing ? "none" : "block"
+    
         // h2.textContent = input.textContent
+        setTimeout(() => input.focus(), 0)
+        h2.textContent = input.value.trim()
+        playerSet = createPlayers()
+
     }
 
     function _runTurn(x, y){
@@ -76,16 +97,22 @@ let ticTacToe = (function(){
     function createPlayers(){
         // try deconstructing a nodelist of all inputs for assignment?
         // TODO obtain playerNames from their respective h2 elements
-        let player1Name = ""
-        let player2Name = ""
+        const panels = document.querySelectorAll(".playerPanel");
+        
+        
+        let players = {}
+        
+        panels.forEach( panel =>{
+            const playerKey = panel.getAttribute("data-player")
+            const name = panel.querySelector('h2').textContent
+            players[playerKey] = name || 'Player ${playerKey)'
+        })
+
 
         
         // return an object containing two "player" objects
-
-        return {
-            X: player1Name,
-            O: player2Name
-        }
+        console.log(players)
+        return players
     }
     
     function _setGameBoard(){
@@ -139,7 +166,7 @@ let ticTacToe = (function(){
     
     
     // Run the game
-    const playerSet = createPlayers()
+    playerSet = createPlayers()
     _setGameBoard()
     _render()
     
@@ -183,6 +210,7 @@ let ticTacToe = (function(){
         _checkForWin,
         // playerSet,
         playerPanels,
-        isGameRunning
+        isGameRunning,
+        playerSet
     }
 })()
