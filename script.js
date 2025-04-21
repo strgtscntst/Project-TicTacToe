@@ -5,12 +5,14 @@ const ticTacToe = (function(){
     let gameBoard 
     let isGameRunning 
     let playerSet
+    let winState
 
     // Cache Dom
     const DOC = document;
     const cellList = Array.from(DOC.querySelectorAll('.cell'))
     const resetButton = DOC.getElementById("reset")
     const playerPanels = Array.from(DOC.querySelectorAll(".playerPanel"))
+    const winnerDialog = DOC.getElementById("winnerDisplay")
 
     // Bind Events
     cellList.map(node => {
@@ -20,6 +22,7 @@ const ticTacToe = (function(){
             _runTurn(x, y);
         })
     })
+    // TODO: Change resetButton to a nodelist containing all #reset-button elements and ensure continued functionality
     resetButton.addEventListener("click", () => {
         _setGameBoard();
         _render();
@@ -145,20 +148,23 @@ const ticTacToe = (function(){
         
         // prevent modification of whoseTurn if game has been won.
         if(isGameRunning){
-        
+            winState = ""
+            console.log(winState)
             // check for win or tie
             if(winArrays.some(arr => arr.every(checkItem => checkItem === "X") || arr.every(checkItem => checkItem === "O"))){
                 // _render()
                 
                 // TODO Notify the players of winstate
+                winState = "Win"
                 _endOfGame()
                 
-                console.log(`${whoseTurn} wins!`)
+                console.log(`${whoseTurn} ${winState}!`)
                 isGameRunning = false
             } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
                 // _render()
+                winState = "Tie"
                 _endOfGame()
-                console.log("Tie game")
+                console.log(winState)
                 isGameRunning = false
 
             } else {
@@ -167,10 +173,12 @@ const ticTacToe = (function(){
         }
     }
     function _endOfGame(){
-        // Take whoseTurn, check it against playerSet, to get winner name
-        console.log("testLog")
+        let winner = playerSet[whoseTurn]
+        // Fill in the appropriate username, or Player1/Player2
+        winnerDialog.querySelector("#winStateText").textContent = `${winState}`
+        winnerDialog.querySelector("#winnerName").textContent = `${winner}`
         // Enable the Dialogue box
-            // Fill in the appropriate username, or Player1/Player2
+        winnerDialog.showModal()
     }
     
     // Run the game
