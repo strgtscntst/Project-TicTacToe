@@ -31,7 +31,7 @@
             <div class="cell" data-x="1" data-y="2"></div>
             <div class="cell" data-x="2" data-y="2"></div>
         </div>
-        <button id="reset">Reset Board</button>
+        <button class="reset-button" id="reset">Reset Board</button>
     </div>
     <div class="panel playerPanel" data-player="O">
         <h2 id="playerONameDisplay">player2Name</h2>
@@ -42,6 +42,11 @@
         <div class = "contentDivider"></div>
         <div class = "icon">O</div>
     </div>
+    <dialog id="winnerDisplay">
+        <h2>Winner!</h2>
+        <h1 id="winnerName"></h1>
+        <button class="reset-button">Play Again?</button>
+    </dialog>
     <script src="script.js"></script>
 </body>
 </html>

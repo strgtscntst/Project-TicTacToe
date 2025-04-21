@@ -151,10 +151,13 @@ const ticTacToe = (function(){
                 // _render()
                 
                 // TODO Notify the players of winstate
+                _endOfGame()
+                
                 console.log(`${whoseTurn} wins!`)
                 isGameRunning = false
             } else if(gameBoard.every(row => row.every(space => space != ""))) {  // check tie
                 // _render()
+                _endOfGame()
                 console.log("Tie game")
                 isGameRunning = false
 
@@ -163,7 +166,12 @@ const ticTacToe = (function(){
             }
         }
     }
-    
+    function _endOfGame(){
+        // Take whoseTurn, check it against playerSet, to get winner name
+        console.log("testLog")
+        // Enable the Dialogue box
+            // Fill in the appropriate username, or Player1/Player2
+    }
     
     // Run the game
     playerSet = createPlayers()
