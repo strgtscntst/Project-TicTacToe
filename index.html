@@ -11,7 +11,7 @@
     <div class="panel playerPanel" data-player="X">
         <h2 id="playerXNameDisplay">player1Name</h2>
         <div id="playerXNameInput" class="editArea" >
-            <input>
+            <input value="player1Name">
             <button>Submit</button>
         </div>
         <div class = "contentDivider"></div>
@@ -36,14 +36,14 @@
     <div class="panel playerPanel" data-player="O">
         <h2 id="playerONameDisplay">player2Name</h2>
         <div id="playerONameInput" class="editArea">
-            <input>
+            <input value="player2Name">
             <button>Submit</button>
         </div>
         <div class = "contentDivider"></div>
         <div class = "icon">O</div>
     </div>
-    <dialog id="winnerDisplay">
-        <h2>Winner!</h2>
+    <dialog class="winnerDisplay">
+        <h2 id="winStateText"></h2>
         <h1 id="winnerName"></h1>
         <button class="reset-button">Play Again?</button>
     </dialog>
