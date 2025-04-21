@@ -64,7 +64,7 @@ div.contentDivider{
     font-size: 80px;
 }
 
-#reset{
+.reset-btn{
     font-weight: bold;
     color: black;
     font-size: 1.8em;
@@ -75,7 +75,7 @@ div.contentDivider{
     background-color: #57c4ff;
     box-shadow: inset 4px 6px 6px rgba(0, 0, 0, 0.3);
 }
-#reset:active{
+.reset-btn:active{
     box-shadow: inset 10px 10px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -89,4 +89,21 @@ div.contentDivider{
     display: none;
     text-align: center;
     width: auto;
+}
+
+dialog{
+    text-align: center;
+    border: 3px solid  gold;
+    border-radius: 1em;
+    background-color: #0b0b8b;
+    color: gold;
+    padding: 2em 3em;
+}
+
+dialog h2{
+    font-size: 1.8em;
+}
+
+dialog h1{
+    font-size: 2.4em;
 }

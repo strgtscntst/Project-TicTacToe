@@ -10,7 +10,7 @@ const ticTacToe = (function(){
     // Cache Dom
     const DOC = document;
     const cellList = Array.from(DOC.querySelectorAll('.cell'))
-    const resetButton = DOC.getElementById("reset")
+    const resetButtons = DOC.querySelectorAll(".reset-btn")
     const playerPanels = Array.from(DOC.querySelectorAll(".playerPanel"))
     const winnerDialog = DOC.getElementById("winnerDisplay")
 
@@ -22,10 +22,13 @@ const ticTacToe = (function(){
             _runTurn(x, y);
         })
     })
-    // TODO: Change resetButton to a nodelist containing all #reset-button elements and ensure continued functionality
-    resetButton.addEventListener("click", () => {
-        _setGameBoard();
-        _render();
+
+    resetButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            _setGameBoard();
+            _render();
+            winnerDialog.close()
+        })
     })
     playerPanels.map((panel)=> {
         // apply click listener to h2 & submit button that calls a function to swap display:none between the h2 and the editArea div
@@ -63,7 +66,7 @@ const ticTacToe = (function(){
     
         // h2.textContent = input.textContent
         setTimeout(() => input.focus(), 0)
-        h2.textContent = input.value.trim()
+        h2.textContent = input.value.trim() || "empty"
         playerSet = createPlayers()
 
     }
@@ -108,7 +111,7 @@ const ticTacToe = (function(){
         panels.forEach( panel =>{
             const playerKey = panel.getAttribute("data-player")
             const name = panel.querySelector('h2').textContent
-            players[playerKey] = name || 'Player ${playerKey)'
+            players[playerKey] = name || `Player ${playerKey}`
         })
 
 
